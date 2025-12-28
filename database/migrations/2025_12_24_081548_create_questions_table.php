@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');  // Link to subjects table
             $table->string('question_text');  // The text of the question
-            $table->integer('difficulty_level');
+            $table->integer('difficulty_level')->default(1);
+
+            // Use foreignId for exam_id and add constraint
+            $table->foreignId('exam_id')->constrained('exams')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

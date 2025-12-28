@@ -9,7 +9,7 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['subject_id', 'question_text', 'difficulty_level'];  // Mass assignable fields
+    protected $fillable = ['exam_id', 'subject_id', 'question_text', 'difficulty_level'];  // Mass assignable fields
 
     // Relationship: A question belongs to a subject
     public function subject()

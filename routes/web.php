@@ -5,6 +5,7 @@ use App\Http\Controllers\ResultController;
 use App\Http\Controllers\StudentExamController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SubjectController;
 
 Route::view('/', 'welcome');
 
@@ -38,5 +39,7 @@ Route::middleware('auth')->group(function () {
     });
     // Route for viewing results
     Route::get('results/{examResult}', [ResultController::class, 'show'])->name('results.show');
+    Route::post('/subjects', [SubjectController::class, 'store'])->name('subjects.store');
+
 });
 require __DIR__ . '/auth.php';
