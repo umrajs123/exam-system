@@ -6,6 +6,7 @@ use App\Http\Controllers\StudentExamController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherController;
 
 // Default route for the home page
 Route::view('/', 'welcome')->name('welcome');
@@ -23,12 +24,12 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
     // return redirect()->route('student.dashboard');
     // For now, redirect Teacher and Student to the welcome screen
     $role = auth()->user()->role;
-    $message = match($role) {
+    $message = match ($role) {
         'teacher' => 'Welcome to the system, dear teacher.',
         'student' => 'Welcome to the system, dear student.',
         default => 'Welcome to the system!'
     };
-    
+
     return redirect()->route('welcome')->with('message', $message);
 })->name('dashboard');
 
@@ -50,7 +51,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'teacher'])->group(function () {
     // Routes for teachers (checking student exams, viewing results, etc.)
     Route::get('check-student-exams', [ExamController::class, 'checkStudentExams']);
-    
+
     // Add more routes for teacher functionality as needed
 });
 
@@ -58,13 +59,34 @@ Route::middleware(['auth', 'teacher'])->group(function () {
 Route::middleware(['auth', 'student'])->group(function () {
     // Routes for students to take exams
     Route::get('start-exam/{exam}', [StudentExamController::class, 'start']);
-    
+
     // Add more routes for student functionality as needed
 });
 
 // Routes for viewing exam results (only accessible to Admin, Teacher, and Student)
 Route::middleware(['auth'])->group(function () {
     Route::get('results/{examResult}', [ResultController::class, 'show'])->name('results.show');
+});
+
+// Admin routes for managing teachers
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Show all teachers
+    Route::get('/admin/teachers', [TeacherController::class, 'index'])->name('admin.teachers.index');
+
+    // Show form to create a new teacher
+    Route::get('/admin/teachers/create', [TeacherController::class, 'create'])->name('admin.teachers.create');
+
+    // Store a new teacher
+    Route::post('/admin/teachers', [TeacherController::class, 'store'])->name('admin.teachers.store');
+
+    // Show form to edit a teacher
+    Route::get('/admin/teachers/{teacher}/edit', [TeacherController::class, 'edit'])->name('admin.teachers.edit');
+
+    // Update teacher details
+    Route::put('/admin/teachers/{teacher}', [TeacherController::class, 'update'])->name('admin.teachers.update');
+
+    // Delete teacher
+    Route::delete('/admin/teachers/{teacher}', [TeacherController::class, 'destroy'])->name('admin.teachers.destroy');
 });
 
 // Make sure to include authentication routes at the bottom

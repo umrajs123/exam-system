@@ -6,6 +6,8 @@ use App\Models\Exam;
 use App\Models\Question;
 use App\Models\QuestionOption;
 use App\Models\Subject;
+use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -13,14 +15,16 @@ class ExamController extends Controller
     public function index()
     {
         $exams = Exam::all();  // Get all exams from the database
-        return view('exams.index', compact('exams'));  // Return the exams to the view
+        //$teacherCount = Teacher::count(); 
+        $teacherCount = User::where('role', 'teacher')->count();
+        return view('exams.index', compact('exams', 'teacherCount'));  // Return the exams to the view
     }
 
     // Show the form to create a new exam
     public function create()
     {
         // Fetch all subjects
-    $subjects = Subject::all();
+        $subjects = Subject::all();
         return view('exams.create', compact('subjects'));  // Display form to create a new exam
     }
 

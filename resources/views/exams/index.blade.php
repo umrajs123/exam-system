@@ -5,12 +5,25 @@
         <!-- Page Title -->
         <h1 class="mb-8 text-3xl font-semibold text-center text-gray-800">Exams</h1>
 
-        <!-- Create New Exam Button -->
-        <div class="flex items-center justify-between mb-4">
-            <a href="{{ route('exams.create') }}" class="px-4 py-2 text-lg font-medium text-white transition duration-200 ease-in-out bg-blue-400 rounded-lg hover:bg-blue-500">
+        <!-- Display Total Number of Teachers -->
+
+        <div class="flex py-3 space-x-4">
+            <a href="{{ route('admin.teachers.create') }}"
+                class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-700 rounded-md bg-green-50 inset-ring inset-ring-green-600/20">
+                Add New Teacher
+            </a>
+
+            <a href="{{ route('admin.teachers.index') }}"
+                class="inline-flex items-center px-2 py-1 text-xs font-medium text-purple-700 rounded-md bg-purple-50 inset-ring inset-ring-purple-700/10">
+                All Teachers
+            </a>
+
+            <a href="{{ route('exams.create') }}"
+                class="inline-flex items-center px-2 py-1 text-xs font-medium text-pink-700 rounded-md bg-pink-50 inset-ring inset-ring-pink-700/10">
                 Create New Exam
             </a>
         </div>
+
 
         <!-- Exam List -->
         <div class="overflow-x-auto bg-white rounded-lg shadow-lg">
