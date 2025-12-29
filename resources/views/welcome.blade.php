@@ -16,8 +16,23 @@
 </head>
 
 <body>
-<div class="p-4 text-red-800 bg-blue-500">
-        <h1 class="text-2xl">Test TailwindCSS</h1>
+    <div class="flex items-center justify-center min-h-screen bg-blue-600">
+        <div class="text-center text-white rounded p-7">
+            @if (session('message'))
+                <p class="text-2xl font-semibold">{{ session('message') }}</p>
+            @else
+                <p class="text-2xl font-semibold">Welcome to the system!</p>
+            @endif
+            
+            @auth
+                <form method="POST" action="{{ route('logout') }}" class="mt-6">
+                    @csrf
+                    <button type="submit" class="px-6 py-2 font-semibold text-white bg-red-600 rounded hover:bg-red-700">
+                        Logout
+                    </button>
+                </form>
+            @endauth
+        </div>
     </div>
 
 </body>
