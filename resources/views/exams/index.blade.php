@@ -22,6 +22,11 @@
                 class="inline-flex items-center px-2 py-1 text-xs font-medium text-pink-700 rounded-md bg-pink-50 inset-ring inset-ring-pink-700/10">
                 Create New Exam
             </a>
+
+            <a href="{{ route('subjects.index') }}"
+                class="inline-flex items-center px-2 py-1 text-xs font-medium text-yellow-700 rounded-md bg-yellow-50 inset-ring inset-ring-pink-700/10">
+                Subjects List
+            </a>
         </div>
 
 

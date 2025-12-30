@@ -9,11 +9,21 @@ use Illuminate\Support\Facades\Hash;
 class TeacherController extends Controller
 {
     // Show all teachers
-    public function index()
+     public function index(Request $request)
     {
-        $teachers = User::where('role', 'teacher')->get();  // Get all teachers from the users table
-        $teacherCount = User::where('role', 'teacher')->count();  // Count all teachers
-        
+        $search = $request->input('search');
+
+        // If a search term is provided, filter the teachers
+        if ($search) {
+            $teachers = User::where('role', 'teacher')
+                            ->where('name', 'like', '%' . $search . '%')
+                            ->get();
+        } else {
+            $teachers = User::where('role', 'teacher')->get();
+        }
+
+        $teacherCount = $teachers->count();
+
         return view('admin.teachers.index', compact('teachers', 'teacherCount'));
     }
 
