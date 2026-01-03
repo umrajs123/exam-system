@@ -100,7 +100,7 @@ class ExamController extends Controller
             }
 
             foreach ($options as $index => $optionText) {
-                $isCorrect = ($correctIndex !== null) ? ($index === $correctIndex) : ($index === 0);
+                $isCorrect = ($correctIndex !== null) ? ($index === $correctIndex) : false;
 
                 QuestionOption::create([
                     'question_id' => $question->id,
@@ -120,4 +120,49 @@ class ExamController extends Controller
     {
         return view('exams.show', compact('exam'));  // Show the selected exam and its details
     }
+
+    // Delete a specific exam with its questions
+    public function destroy(Exam $exam)
+    {
+        $exam->delete();  // Delete the exam
+        return redirect()->route('exams.index')->with('success', 'Exam deleted successfully');
+    }
+
+    //EDIT EXAMS
+
+    public function edit(Exam $exam)
+    {
+        // Fetch all subjects to show in the dropdown
+        $subjects = Subject::all();
+
+        // Return the view with the exam and subjects data
+        return view('exams.edit', compact('exam', 'subjects'));
+    }
+
+    // ExamController.php
+
+    public function update(Request $request, Exam $exam)
+    {
+        // Validate the incoming data
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'start_time' => 'required|date',
+            'duration' => 'required|integer',
+            'passing_marks' => 'required|integer',
+            'subject_id' => 'nullable|exists:subjects,id',
+        ]);
+
+        // Update the exam data
+        $exam->update([
+            'name' => $validated['name'],
+            'start_time' => $validated['start_time'],
+            'duration' => $validated['duration'],
+            'passing_marks' => $validated['passing_marks'],
+            'subject_id' => $validated['subject_id'], // Update subject_id if provided
+        ]);
+
+        // Redirect back to the exams index with success message
+        return redirect()->route('exams.index')->with('success', 'Exam updated successfully');
+    }
+
 }

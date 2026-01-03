@@ -101,7 +101,7 @@
                 </button>
 
                 <button type="submit"
-                    class="w-full py-3 mt-6 font-semibold text-white transition duration-200 ease-in-out rounded-lg shadow-md sm:w-auto bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:ring-lime-300">
+                    class="w-full px-4 py-2 mt-6 font-semibold text-white transition duration-200 ease-in-out bg-green-500 rounded-lg shadow-md sm:w-auto hover:bg-green-600 focus:ring-4 focus:ring-green-300">
                     Create Exam
                 </button>
             </form>
@@ -118,34 +118,34 @@
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('bg-white', 'p-4', 'border', 'border-gray-300', 'rounded-lg');
             questionDiv.innerHTML = `
-                                <h3 class="mb-2 text-lg font-semibold">Question ${questionCount}</h3>
+                                    <h3 class="mb-2 text-lg font-semibold">Question ${questionCount}</h3>
 
+                                    <div class="mb-4">
+                                        <label for="question_text_${questionCount}" class="block text-lg font-medium text-gray-700">Question Text</label>
+                                        <input type="text" name="questions[${questionCount}][question_text]" id="question_text_${questionCount}" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500" required>
+                                    </div>
+
+
+                                    <!-- Difficulty Level -->
                                 <div class="mb-4">
-                                    <label for="question_text_${questionCount}" class="block text-lg font-medium text-gray-700">Question Text</label>
-                                    <input type="text" name="questions[${questionCount}][question_text]" id="question_text_${questionCount}" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500" required>
+                                    <label for="difficulty_level_${questionCount}" class="block text-lg font-medium text-gray-700">Difficulty Level</label>
+                                    <input type="number" name="questions[${questionCount}][difficulty_level]" id="difficulty_level_${questionCount}" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500" min="1" max="5" required>
                                 </div>
 
-
-                                <!-- Difficulty Level -->
-                            <div class="mb-4">
-                                <label for="difficulty_level_${questionCount}" class="block text-lg font-medium text-gray-700">Difficulty Level</label>
-                                <input type="number" name="questions[${questionCount}][difficulty_level]" id="difficulty_level_${questionCount}" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500" min="1" max="5" required>
-                            </div>
-
-                                <!-- Options for this Question -->
-                                <div class="space-y-4" id="options_${questionCount}">
-                                    <div class="flex items-center space-x-3">
-                                        <input type="radio" name="questions[${questionCount}][correct_option]" value="option_1" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
-                                        <input type="text" name="questions[${questionCount}][options][]" placeholder="Option 1" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
+                                    <!-- Options for this Question -->
+                                    <div class="space-y-4" id="options_${questionCount}">
+                                        <div class="flex items-center space-x-3">
+                                            <input type="radio" name="questions[${questionCount}][correct_option]" value="option_1" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
+                                            <input type="text" name="questions[${questionCount}][options][]" placeholder="Option 1" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <input type="radio" name="questions[${questionCount}][correct_option]" value="option_2" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
+                                            <input type="text" name="questions[${questionCount}][options][]" placeholder="Option 2" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
+                                        </div>
                                     </div>
-                                    <div class="flex items-center space-x-3">
-                                        <input type="radio" name="questions[${questionCount}][correct_option]" value="option_2" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
-                                        <input type="text" name="questions[${questionCount}][options][]" placeholder="Option 2" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
-                                    </div>
-                                </div>
 
-                                <button type="button" class="mt-2 text-blue-500 hover:underline" onclick="addOption(${questionCount})">Add More Options</button>
-                            `;
+                                    <button type="button" class="mt-2 text-blue-500 hover:underline" onclick="addOption(${questionCount})">Add More Options</button>
+                                `;
 
             document.getElementById('questionFields').appendChild(questionDiv);
         });
@@ -155,9 +155,9 @@
             const optionDiv = document.createElement('div');
             optionDiv.classList.add('flex', 'items-center', 'space-x-3');
             optionDiv.innerHTML = `
-                                <input type="radio" name="questions[${questionId}][correct_option]" value="option_${optionsDiv.children.length + 1}" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
-                                <input type="text" name="questions[${questionId}][options][]" placeholder="Option ${optionsDiv.children.length + 1}" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
-                            `;
+                                    <input type="radio" name="questions[${questionId}][correct_option]" value="option_${optionsDiv.children.length + 1}" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
+                                    <input type="text" name="questions[${questionId}][options][]" placeholder="Option ${optionsDiv.children.length + 1}" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
+                                `;
             optionsDiv.appendChild(optionDiv);
         }
     </script>
