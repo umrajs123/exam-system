@@ -53,10 +53,10 @@
                                 <!-- Delete Action -->
                                 <div x-data="{ open: false }">
                                     <!-- Delete Button -->
-                                    <a href="{{ route('exams.destroy', $exam->id) }}" @click="open = true"
-                                        class="text-red-500 hover:text-red-700">
+                                    <button @click="open = true"
+                                        class="ml-4 text-red-500 hover:text-red-700">
                                         Delete
-                                    </a>
+                                    </button>
 
                                     <!-- Confirmation Modal -->
                                     <div x-show="open" x-transition @click.away="open = false"
@@ -66,7 +66,7 @@
                                             <div class="mt-4">
                                                 <button @click="open = false"
                                                     class="px-4 py-2 text-black bg-gray-300 rounded-md">Cancel</button>
-                                                <button @click="open = false; document.getElementById('delete-form').submit();"
+                                                <button @click="open = false; document.getElementById('delete-form-{{ $exam->id }}').submit();"
                                                     class="px-4 py-2 text-white bg-red-500 rounded-md">Confirm</button>
                                             </div>
                                         </div>
@@ -74,7 +74,7 @@
                                 </div>
 
                                 <!-- Delete Form (hidden, will be submitted on confirmation) -->
-                                <form id="delete-form" action="{{ route('exams.destroy', $exam->id) }}" method="POST"
+                                <form id="delete-form-{{ $exam->id }}" action="{{ route('exams.destroy', $exam->id) }}" method="POST"
                                     style="display: none;">
                                     @csrf
                                     @method('DELETE')
