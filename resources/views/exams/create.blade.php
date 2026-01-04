@@ -135,11 +135,11 @@
                                     <!-- Options for this Question -->
                                     <div class="space-y-4" id="options_${questionCount}">
                                         <div class="flex items-center space-x-3">
-                                            <input type="radio" name="questions[${questionCount}][correct_option]" value="option_1" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
+                                            <input type="radio" name="questions[${questionCount}][correct_option]" value="0" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
                                             <input type="text" name="questions[${questionCount}][options][]" placeholder="Option 1" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
                                         </div>
                                         <div class="flex items-center space-x-3">
-                                            <input type="radio" name="questions[${questionCount}][correct_option]" value="option_2" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
+                                            <input type="radio" name="questions[${questionCount}][correct_option]" value="1" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
                                             <input type="text" name="questions[${questionCount}][options][]" placeholder="Option 2" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
             const optionDiv = document.createElement('div');
             optionDiv.classList.add('flex', 'items-center', 'space-x-3');
             optionDiv.innerHTML = `
-                                    <input type="radio" name="questions[${questionId}][correct_option]" value="option_${optionsDiv.children.length + 1}" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
+                                    <input type="radio" name="questions[${questionId}][correct_option]" value="${optionsDiv.children.length}" class="border-gray-300 rounded-md form-radio text-lime-500 focus:ring-lime-500">
                                     <input type="text" name="questions[${questionId}][options][]" placeholder="Option ${optionsDiv.children.length + 1}" class="block w-full mt-2 border-gray-300 rounded-lg shadow-sm focus:ring-lime-500 focus:border-lime-500">
                                 `;
             optionsDiv.appendChild(optionDiv);

@@ -53,7 +53,8 @@
                                 <!-- Delete Action -->
                                 <div x-data="{ open: false }">
                                     <!-- Delete Button -->
-                                    <a href="#" @click="open = true" class="text-red-500 hover:text-red-700">
+                                    <a href="{{ route('exams.destroy', $exam->id) }}" @click="open = true"
+                                        class="text-red-500 hover:text-red-700">
                                         Delete
                                     </a>
 

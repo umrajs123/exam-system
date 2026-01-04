@@ -50,7 +50,8 @@ class ExamController extends Controller
             'questions' => 'required|array',
             'questions.*.question_text' => 'required|string',
             'questions.*.options' => 'required|array',
-            'questions.*.options.*' => 'required|string',
+            'questions.*.options.*' => 'nullable|string',
+            'questions.*.correct_option' => 'nullable|string',
             'questions.*.subject_id' => 'nullable|exists:subjects,id',
         ]);
 
@@ -85,22 +86,35 @@ class ExamController extends Controller
                 'difficulty_level' => $questionData['difficulty_level'] ?? 1, // Set default to 1 if not provided
             ]);
 
-            // Clean and filter options to avoid inserting null/empty values
-            $options = array_values(array_filter($questionData['options'], function ($opt) {
-                return !is_null($opt) && trim((string) $opt) !== '';
-            }));
-
-            // Determine correct option index if provided (value like "option_1")
-            $correctIndex = null;
-            if (!empty($questionData['correct_option'])) {
-                if (preg_match('/option_(\d+)/', $questionData['correct_option'], $m)) {
-                    // convert 1-based option number to 0-based index
-                    $correctIndex = (int) $m[1] - 1;
-                }
+            // Determine selected option index if provided (value like "0", "1", etc.)
+            $correctIndex = $questionData['correct_option'] ?? null;
+            if ($correctIndex !== null) {
+                $correctIndex = (int) $correctIndex;
             }
 
-            foreach ($options as $index => $optionText) {
-                $isCorrect = ($correctIndex !== null) ? ($index === $correctIndex) : false;
+            // Debug logging
+            \Log::info('Question options processing', [
+                'correct_option_raw' => $questionData['correct_option'] ?? 'NOT SET',
+                'correctIndex' => $correctIndex,
+                'options' => $questionData['options'],
+            ]);
+
+            // Iterate original options so correctness is determined against original indexes.
+            foreach ($questionData['options'] as $origIndex => $optionText) {
+                if (is_null($optionText) || trim((string) $optionText) === '') {
+                    continue;
+                }
+
+                // Compare the original option index (0-based) to the posted value
+                $isCorrect = $correctIndex !== null && $origIndex === $correctIndex;
+
+                \Log::info('Creating option', [
+                    'option_text' => $optionText,
+                    'origIndex' => $origIndex,
+                    'correctIndex' => $correctIndex,
+                    'isCorrect' => $isCorrect,
+                    'isCorrect_type' => gettype($isCorrect),
+                ]);
 
                 QuestionOption::create([
                     'question_id' => $question->id,
