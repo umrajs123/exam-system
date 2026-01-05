@@ -23,7 +23,8 @@ new class extends Component {
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" wire:navigate>
-                        <x-application-logo class="block w-auto text-indigo-500 fill-current h-9" />
+                        <!-- <x-application-logo class="block w-auto text-indigo-500 fill-current h-9" /> -->
+                        <h1 class="text-2xl font-extrabold italic underline decoration-indigo-500/25 hover:decoration-indigo-500 text-indigo-600">Exam Portal</h1>
                     </a>
                 </div>
 
